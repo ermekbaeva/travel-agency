@@ -38,6 +38,16 @@ public class ClientsDao extends DataAccessObject<Clients> {
     }
 
     @Override
+    public String filterByCountry(String country) {
+        return null;
+    }
+
+    @Override
+    public String filterByPrice(int min, int max) {
+        return null;
+    }
+
+    @Override
     public Clients update(Clients toUpdate) {
         return null;
     }
@@ -45,9 +55,9 @@ public class ClientsDao extends DataAccessObject<Clients> {
     @Override
     public void create(Clients toCreate) {
         try {
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(INSERT);
+            PreparedStatement statement = this.connection.prepareStatement(INSERT);
 
-            if (CheckEmailInDB(toCreate.getEmail()) == true) {
+            if (CheckEmailInDB(toCreate.getEmail())) {
                 System.out.println("This email already exists.");
                 System.out.println("--------------------------");
                 MainMenu.menu();
@@ -76,7 +86,7 @@ public class ClientsDao extends DataAccessObject<Clients> {
     public boolean CheckEmailInDB(String email) {
 
         try {
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(SELECT_BY_EMAIL);
+            PreparedStatement statement = this.connection.prepareStatement(SELECT_BY_EMAIL);
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

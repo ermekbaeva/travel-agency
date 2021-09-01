@@ -11,7 +11,13 @@ public abstract class DataAccessObject <T extends DataTransferObject>{
 
     public abstract T findById(long id);
 
-    public  abstract String getAll();
+    public abstract String getAll();
+
+    public abstract boolean CheckEmailInDB(String email);
+
+    public abstract String filterByCountry(String country);
+
+    public abstract String filterByPrice(int min, int max);
 
     public abstract T update(T toUpdate);
 

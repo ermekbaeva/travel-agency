@@ -22,6 +22,21 @@ public class ReservationsDao extends  DataAccessObject<Reservations>{
     }
 
     @Override
+    public boolean CheckEmailInDB(String email) {
+        return false;
+    }
+
+    @Override
+    public String filterByCountry(String country) {
+        return null;
+    }
+
+    @Override
+    public String filterByPrice(int min, int max) {
+        return null;
+    }
+
+    @Override
     public Reservations update(Reservations toUpdate) {
         return null;
     }
@@ -35,46 +50,5 @@ public class ReservationsDao extends  DataAccessObject<Reservations>{
     public void delete(long id) {
 
     }
-
-    /*public Reservations getAllReservations() {
-        Reservations reserve = new Reservations();
-        Savepoint savepoint = null;
-
-        try {
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(SELECT_ALL);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                reserve.setClientID(resultSet.getInt("Id_client"));
-                reserve.setTourID(resultSet.getInt("Id_tour"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return reserve;
-
-    }
-
-    public void addNewReservation(){
-
-        try{
-            System.out.print("Enter country of tour: ");
-            Scanner scanner = new Scanner(System.in);
-            String country = scanner.nextLine();
-
-
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(INSERT);
-
-            *//*statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            statement.executeUpdate();
-            statement.close();*//*
-            System.out.println("Your account has registered.");
-            MainMenu.optionMenu();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }*/
-
 
 }

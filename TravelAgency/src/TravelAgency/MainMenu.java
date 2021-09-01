@@ -15,24 +15,27 @@ public class MainMenu {
         System.out.println("Choose the option: ");
         System.out.println();
         System.out.println("1. See all tours");
-        System.out.println("2. Reserve the tour");
-        System.out.println("3. Cancel the tour");
-        System.out.println("4. Filter tours by price");
-        System.out.println("5. Filter tours by country");
+        System.out.println("2. Filter tours by price");
+        System.out.println("3. Filter tours by country");
+        System.out.println("4. Reserve the tour");
+        System.out.println("5. Cancel the tour");
         System.out.println("6. See my reservations");
-        System.out.println("write 'quit' for exit: ");
+        System.out.println("Write 'quit' for exit: ");
 
         String answer = scanner.nextLine();
 
         switch (answer){
             case "1":
                 System.out.println(tours.getAllTours());
+                optionMenu();
                 break;
             case "2":
-              //  addTour();
+                System.out.println(tours.filterByPrice());
+                optionMenu();
                 break;
             case "3":
-              //  addReservation();
+                System.out.println(tours.filterByCountry());
+                optionMenu();
                 break;
             case "4":
              //   printAllClients();
@@ -66,7 +69,7 @@ public class MainMenu {
             case "Y":
                 System.out.print("Enter your email: ");
                 String email = scanner.nextLine();
-                if (cl.CheckEmailInDB(email) == true){
+                if (clientService.checkEmailInDB(email)){
                     optionMenu();
                     break;
                 }else{
@@ -85,7 +88,6 @@ public class MainMenu {
                 menu();
                 break;
         }
-
 
     }
 }

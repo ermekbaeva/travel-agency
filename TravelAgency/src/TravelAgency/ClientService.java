@@ -34,5 +34,8 @@ public class ClientService {
 
         this.accessObject.create(newClient);
     }
+    public boolean checkEmailInDB(String email){
+        return this.accessObject.CheckEmailInDB(email);
+    }
 
 }
