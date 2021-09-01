@@ -1,10 +1,12 @@
-package TravelAgency;
+package TravelAgency.Entity;
+
+import TravelAgency.Dao.DataTransferObject;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
-public class Tours implements DataTransferObject{
+public class Tours implements DataTransferObject {
     private int tourID;
     private String country;
     private double price;

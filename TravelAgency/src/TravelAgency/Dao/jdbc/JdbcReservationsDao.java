@@ -1,13 +1,16 @@
-package TravelAgency;
+package TravelAgency.Dao.jdbc;
+
+import TravelAgency.Dao.GenericDao;
+import TravelAgency.Entity.Reservations;
 
 import java.sql.*;
 
-public class ReservationsDao extends  DataAccessObject<Reservations>{
+public class JdbcReservationsDao extends GenericDao<Reservations> {
 
     private static final String SELECT_ALL = "SELECT * FROM reservation";
     private static final String INSERT = "INSERT INTO reservation (Id_client, Id_tour) VALUES(?, ?)";
 
-    public ReservationsDao(Connection connection) {
+    public JdbcReservationsDao(Connection connection) {
         super(connection);
     }
 

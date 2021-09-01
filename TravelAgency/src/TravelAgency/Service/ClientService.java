@@ -1,14 +1,17 @@
-package TravelAgency;
+package TravelAgency.Service;
 
+
+import TravelAgency.Dao.GenericDao;
+import TravelAgency.Entity.Clients;
 
 import java.util.Scanner;
 
 public class ClientService {
 
 
-    private DataAccessObject<Clients> accessObject;
+    private GenericDao<Clients> accessObject;
 
-    public ClientService(DataAccessObject<Clients> accessObject){
+    public ClientService(GenericDao<Clients> accessObject){
         this.accessObject = accessObject;
     }
 

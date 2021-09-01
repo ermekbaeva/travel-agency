@@ -1,5 +1,11 @@
 package TravelAgency;
 
+import TravelAgency.Connection.DBConnection;
+import TravelAgency.Dao.jdbc.JdbcClientsDao;
+import TravelAgency.Dao.jdbc.JdbcToursDao;
+import TravelAgency.Service.ClientService;
+import TravelAgency.Service.TourService;
+
 import java.sql.Connection;
 import java.util.Scanner;
 
@@ -11,7 +17,7 @@ public class MainMenu {
         menu();
     }
     static void optionMenu(){
-        TourService tours = new TourService(new ToursDao(DBConnection.getConnection()));
+        TourService tours = new TourService(new JdbcToursDao(DBConnection.getConnection()));
         System.out.println("Choose the option: ");
         System.out.println();
         System.out.println("1. See all tours");
@@ -55,8 +61,8 @@ public class MainMenu {
         }
     }
     static void menu(){
-        final ClientService clientService = new ClientService(new ClientsDao(DBConnection.getConnection()));
-        ClientsDao cl = new ClientsDao(connection);
+        final ClientService clientService = new ClientService(new JdbcClientsDao(DBConnection.getConnection()));
+        JdbcClientsDao cl = new JdbcClientsDao(connection);
 
         System.out.println("************************************");
         System.out.println("      Welcome to Travel Agency      ");

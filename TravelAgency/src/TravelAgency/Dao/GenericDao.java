@@ -1,11 +1,11 @@
-package TravelAgency;
+package TravelAgency.Dao;
 
 import java.sql.Connection;
 
-public abstract class DataAccessObject <T extends DataTransferObject>{
+public abstract class GenericDao<T extends DataTransferObject>{
     protected final Connection connection;
 
-    public DataAccessObject(Connection connection) {
+    public GenericDao(Connection connection) {
         this.connection = connection;
     }
 

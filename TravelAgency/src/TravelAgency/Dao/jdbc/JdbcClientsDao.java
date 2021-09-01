@@ -1,13 +1,18 @@
-package TravelAgency;
+package TravelAgency.Dao.jdbc;
+
+import TravelAgency.Connection.DBConnection;
+import TravelAgency.Dao.GenericDao;
+import TravelAgency.Entity.Clients;
+import TravelAgency.MainMenu;
 
 import java.sql.*;
 
-public class ClientsDao extends DataAccessObject<Clients> {
+public class JdbcClientsDao extends GenericDao<Clients> {
     private static final String INSERT = "INSERT INTO clients (FirstName, LastName, Email) VALUES(?, ?, ?, ?)";
     private static final String SELECT_BY_EMAIL = "SELECT * FROM clients WHERE email = ?";
     private static final String SELECT_ALL = "SELECT * FROM clients";
 
-    public ClientsDao(Connection connection) {
+    public JdbcClientsDao(Connection connection) {
         super(connection);
     }
 

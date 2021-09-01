@@ -1,14 +1,17 @@
-package TravelAgency;
+package TravelAgency.Dao.jdbc;
+
+import TravelAgency.Dao.GenericDao;
+import TravelAgency.Entity.Tours;
 
 import java.sql.*;
 
-public class ToursDao extends DataAccessObject<Tours>{
+public class JdbcToursDao extends GenericDao<Tours> {
 
     private static final String SELECT_ALL = "SELECT * FROM tours";
     private static final String FILTER_BY_COUNTRY = "SELECT Id_tour, Country, Price, Departure_date, Arrival_date, Hotel_name, Free_places FROM tours WHERE Country = ?";
     private static final String FILTER_BY_PRICE = "SELECT Id_tour, Country, Price, Departure_date, Arrival_date, Hotel_name, Free_places FROM tours WHERE Price BETWEEN ? AND ?";
 
-    public ToursDao(Connection connection) {
+    public JdbcToursDao(Connection connection) {
         super(connection);
     }
 

@@ -1,4 +1,4 @@
-package TravelAgency;
+package TravelAgency.Connection;
 
 import java.sql.*;
 import java.util.ArrayList;

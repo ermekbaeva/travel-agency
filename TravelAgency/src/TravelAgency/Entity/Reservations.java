@@ -1,6 +1,8 @@
-package TravelAgency;
+package TravelAgency.Entity;
 
-public class Reservations implements DataTransferObject{
+import TravelAgency.Dao.DataTransferObject;
+
+public class Reservations implements DataTransferObject {
     private int reservationID;
     private int clientID;
     private int tourID;

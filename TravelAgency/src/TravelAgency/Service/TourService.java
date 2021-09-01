@@ -1,4 +1,7 @@
-package TravelAgency;
+package TravelAgency.Service;
+
+import TravelAgency.Dao.GenericDao;
+import TravelAgency.Entity.Tours;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -6,9 +9,9 @@ import java.util.Scanner;
 public class TourService {
     static Connection connection;
 
-    private DataAccessObject<Tours> accessObject;
+    private GenericDao<Tours> accessObject;
 
-    public TourService(DataAccessObject<Tours> accessObject){
+    public TourService(GenericDao<Tours> accessObject){
         this.accessObject = accessObject;
     }
 

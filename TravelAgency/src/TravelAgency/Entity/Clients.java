@@ -1,9 +1,11 @@
-package TravelAgency;
+package TravelAgency.Entity;
+
+import TravelAgency.Dao.DataTransferObject;
 
 import java.util.List;
 
 
-public class Clients implements DataTransferObject{
+public class Clients implements DataTransferObject {
 
     private int clientID;
     private String firstName;
