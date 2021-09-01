@@ -1,77 +1,60 @@
 package TravelAgency;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.sql.*;
 
-public class ToursDao {
+public class ToursDao extends DataAccessObject<Tours>{
     private static final String INSERT = "INSERT INTO tours (FirstName, LastName, Email) VALUES(?, ?, ?)";
-  //  private static final String SELECT_BY_EMAIL = "SELECT * FROM tours";
     private static final String SELECT_ALL = "SELECT * FROM tours";
+    private static final String FILTER_BY_COUNTRY = "SELECT * FROM tours";
+    private static final String FILTER_BY_PRICE = "SELECT * FROM tours";
 
-    public Clients findByEmail() {
-        Clients client = new Clients();
-        Savepoint savepoint = null;
+    public ToursDao(Connection connection) {
+        super(connection);
+    }
 
+    @Override
+    public Tours findById(long id) {
+        return null;
+    }
+
+    @Override
+    public String getAll() {
+        Tours tour = new Tours();
+        StringBuilder allTours = new StringBuilder();
         try {
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(SELECT_ALL);
+            PreparedStatement statement = this.connection.prepareStatement(SELECT_ALL);
             ResultSet resultSet = statement.executeQuery();
 
+
             while (resultSet.next()) {
-                client.setFirstName(resultSet.getString("first_name"));
-                client.setFirstName(resultSet.getString("last_name"));
-                client.setFirstName(resultSet.getString("email"));
+                tour.setTourID(resultSet.getInt("Id_tour"));
+                tour.setCountry(resultSet.getString("Country"));
+                tour.setPrice(resultSet.getDouble("Price"));
+                tour.setDepartureDate((resultSet.getDate("Departure_date").toLocalDate()));
+                tour.setArrivalDate((resultSet.getDate("Arrival_date").toLocalDate()));
+                tour.setHotelName(resultSet.getString("Hotel_name"));
+                tour.setFreePlaces(resultSet.getInt("Free_places"));
+                allTours.append(tour.toString()+"\n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return client;
+        return String.valueOf(allTours);
+    }
+
+    @Override
+    public Tours update(Tours toUpdate) {
+        return null;
+    }
+
+    @Override
+    public void create(Tours toCreate) {
 
     }
 
-    public void addNewTour(){
+    @Override
+    public void delete(long id) {
 
-        try{
-            System.out.print("Enter first name: ");
-            Scanner scanner = new Scanner(System.in);
-            String firstName = scanner.nextLine();
-
-            System.out.print("Enter last name: ");
-            String lastName = scanner.nextLine();
-
-            System.out.print("Enter email: ");
-            String email = scanner.nextLine();
-
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(INSERT);
-
-                statement.setString(1, firstName);
-                statement.setString(2, lastName);
-                statement.setString(3, email);
-                statement.executeUpdate();
-                statement.close();
-                System.out.println("Your account has registered.");
-                MainMenu.optionMenu();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
     }
 
-    public boolean ShowAllTours(String email){
-
-        try{
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(SELECT_ALL);
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
 }

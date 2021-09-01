@@ -1,60 +1,91 @@
+package TravelAgency;
+
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class MainMenu {
+    static Scanner scanner = new Scanner(System.in);
+    static Connection connection;
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-
-        System.out.println("Enter '1' to add the client");
-        System.out.println("Enter '2' to add the tour");
-        System.out.println("Enter '3' to add the reservation");
-        System.out.println("Enter '4' to print all clients");
-        System.out.println("Enter '5' to print all tours");
-        System.out.println("Enter '6' to print all reservations");
-        System.out.println("Enter '7' to delete the client");
-        System.out.println("Enter '8' to delete the tour");
-        System.out.println("Enter '9' to delete the reservation");
-        System.out.println("for exit press q or Q: ");
+        menu();
+    }
+    static void optionMenu(){
+        TourService tours = new TourService(new ToursDao(DBConnection.getConnection()));
+        System.out.println("Choose the option: ");
+        System.out.println();
+        System.out.println("1. See all tours");
+        System.out.println("2. Reserve the tour");
+        System.out.println("3. Cancel the tour");
+        System.out.println("4. Filter tours by price");
+        System.out.println("5. Filter tours by country");
+        System.out.println("6. See my reservations");
+        System.out.println("write 'quit' for exit: ");
 
         String answer = scanner.nextLine();
 
         switch (answer){
             case "1":
-
+                System.out.println(tours.getAllTours());
                 break;
             case "2":
-
+              //  addTour();
                 break;
             case "3":
-
+              //  addReservation();
                 break;
             case "4":
-                printAllClients();
+             //   printAllClients();
                 break;
             case "5":
-
+             //   printAllTours();
                 break;
             case "6":
-
+              //  printAllReservations();
                 break;
-            case "7":
-
-                break;
-            case "8":
-
-                break;
-            case "9":
-
+            case "quit":
                 break;
             default:
+                System.out.println("Enter number to choose the option!");
+                optionMenu();
                 break;
         }
-        DBTravelAgency db = new DBTravelAgency();
-        //db.addNewClient();
-        //db.describeTableClients(answer);
     }
+    static void menu(){
+        final ClientService clientService = new ClientService(new ClientsDao(DBConnection.getConnection()));
+        ClientsDao cl = new ClientsDao(connection);
 
-    static void printAllClients(){
+        System.out.println("************************************");
+        System.out.println("      Welcome to Travel Agency      ");
+        System.out.println("************************************");
+        System.out.println();
+        System.out.println("Already have an account? Y/N \nEnter quit to exit");
+        System.out.println();
+        String answer = scanner.nextLine();
+        switch (answer){
+            case "Y":
+                System.out.print("Enter your email: ");
+                String email = scanner.nextLine();
+                if (cl.CheckEmailInDB(email) == true){
+                    optionMenu();
+                    break;
+                }else{
+                    System.out.println("Email has not found.");
+                    System.out.println("--------------------");
+                    menu();
+                    break;
+                }
+            case "N":
+                clientService.addClient();
+            case "quit":
+                break;
+            default:
+                System.out.println("Enter Y/N to enter the menu!");
+                System.out.println("----------------------------");
+                menu();
+                break;
+        }
+
 
     }
 }
