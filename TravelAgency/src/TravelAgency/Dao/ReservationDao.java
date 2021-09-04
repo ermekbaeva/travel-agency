@@ -9,13 +9,9 @@ public abstract class ReservationDao<T extends DataTransferObject>{
         this.connection = connection;
     }
 
-    public abstract T findById(long id);
+    public abstract String getAll(String email);
 
-    public abstract String getAll();
+    public abstract void create(String email, String country, int price);
 
-    public abstract T update(T toUpdate);
-
-    public abstract void create(T toCreate);
-
-    public abstract void delete(long id);
+    public abstract void delete(String email, String country, int price);
 }

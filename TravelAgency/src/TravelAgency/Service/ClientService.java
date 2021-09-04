@@ -3,9 +3,7 @@ package TravelAgency.Service;
 
 import TravelAgency.Dao.ClientDao;
 import TravelAgency.Entity.Clients;
-import TravelAgency.MainMenu;
 
-import java.util.Scanner;
 
 public class ClientService {
 
@@ -22,10 +20,7 @@ public class ClientService {
         newClient.setLastName(lastName);
         newClient.setEmail(email);
         newClient.setPassword(password);
-
-
         this.accessObject.create(newClient);
-
     }
     public boolean checkEmailInDB(String email){
         return this.accessObject.CheckEmailInDB(email);

@@ -2,8 +2,10 @@ package TravelAgency;
 
 import TravelAgency.Connection.DBConnection;
 import TravelAgency.Dao.jdbc.JdbcClientsDao;
+import TravelAgency.Dao.jdbc.JdbcReservationsDao;
 import TravelAgency.Dao.jdbc.JdbcToursDao;
 import TravelAgency.Service.ClientService;
+import TravelAgency.Service.ReservationService;
 import TravelAgency.Service.TourService;
 
 import java.sql.Connection;
@@ -13,13 +15,18 @@ public class MainMenu {
     static Scanner scanner = new Scanner(System.in);
     static Connection connection;
     private static String email = null;
+    static TourService tours = new TourService(new JdbcToursDao(DBConnection.getConnection()));
+    static final ClientService clientService = new ClientService(new JdbcClientsDao(DBConnection.getConnection()));
+    static ReservationService reserveService = new ReservationService(new JdbcReservationsDao(DBConnection.getConnection()));
+    static String country = null;
+    static int price = 0;
 
     public static void main(String[] args) {
         menu();
     }
 
     static void optionMenu() {
-        TourService tours = new TourService(new JdbcToursDao(DBConnection.getConnection()));
+
         System.out.println("Choose the option: ");
         System.out.println();
         System.out.println("1. See all tours");
@@ -46,13 +53,29 @@ public class MainMenu {
                 optionMenu();
                 break;
             case "4":
-                //   printAllClients();
+                System.out.print("Enter tour's country: ");
+
+                String country = scanner.nextLine();
+
+                System.out.print("Enter price: ");
+                int price = scanner.nextInt();
+
+                reserveService.addReservation(email, country, price);
+                optionMenu();
                 break;
             case "5":
-                //   printAllTours();
+                System.out.print("Enter tour's country: ");
+                country = scanner.nextLine();
+
+                System.out.print("Enter price: ");
+                price = scanner.nextInt();
+
+                reserveService.cancelReservation(email, country, price);
+                optionMenu();
                 break;
             case "6":
-                //  printAllReservations();
+                System.out.println(reserveService.getAllReservations(email));
+                optionMenu();
                 break;
             case "quit":
                 System.exit(0);
@@ -64,7 +87,6 @@ public class MainMenu {
     }
 
    public static void menu() {
-        final ClientService clientService = new ClientService(new JdbcClientsDao(DBConnection.getConnection()));
 
         System.out.println("************************************");
         System.out.println("      Welcome to Travel Agency      ");
@@ -91,7 +113,6 @@ public class MainMenu {
                 }
             case "n":
                 System.out.print("Enter first name: ");
-                Scanner scanner = new Scanner(System.in);
                 String firstName = scanner.nextLine();
 
                 System.out.print("Enter last name: ");
