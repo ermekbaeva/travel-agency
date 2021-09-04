@@ -1,17 +1,18 @@
 package TravelAgency.Service;
 
 
-import TravelAgency.Dao.GenericDao;
+import TravelAgency.Dao.ClientDao;
 import TravelAgency.Entity.Clients;
+import TravelAgency.MainMenu;
 
 import java.util.Scanner;
 
 public class ClientService {
 
 
-    private GenericDao<Clients> accessObject;
+    private ClientDao<Clients> accessObject;
 
-    public ClientService(GenericDao<Clients> accessObject){
+    public ClientService(ClientDao<Clients> accessObject){
         this.accessObject = accessObject;
     }
 
@@ -35,10 +36,20 @@ public class ClientService {
         newClient.setEmail(email);
         newClient.setPassword(password);
 
-        this.accessObject.create(newClient);
+        if (checkEmailInDB(email)) {
+            System.out.println("This email already exists.");
+            System.out.println("--------------------------");
+            MainMenu.menu();
+        } else {
+            this.accessObject.create(newClient);
+        }
     }
     public boolean checkEmailInDB(String email){
         return this.accessObject.CheckEmailInDB(email);
+    }
+
+    public boolean checkPassword(String password){
+        return this.accessObject.checkPasswordInDB(password);
     }
 
 }

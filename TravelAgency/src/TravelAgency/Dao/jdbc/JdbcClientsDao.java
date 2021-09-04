@@ -1,15 +1,17 @@
 package TravelAgency.Dao.jdbc;
 
 import TravelAgency.Connection.DBConnection;
-import TravelAgency.Dao.GenericDao;
+import TravelAgency.Dao.ClientDao;
 import TravelAgency.Entity.Clients;
 import TravelAgency.MainMenu;
 
 import java.sql.*;
+import java.util.Locale;
 
-public class JdbcClientsDao extends GenericDao<Clients> {
-    private static final String INSERT = "INSERT INTO clients (FirstName, LastName, Email) VALUES(?, ?, ?, ?)";
+public class JdbcClientsDao extends ClientDao<Clients> {
+    private static final String INSERT = "INSERT INTO clients (FirstName, LastName, Email, Password) VALUES(?, ?, ?, ?)";
     private static final String SELECT_BY_EMAIL = "SELECT * FROM clients WHERE email = ?";
+    private static final String SELECT_BY_PASSWORD = "SELECT * FROM clients WHERE password = ?";
     private static final String SELECT_ALL = "SELECT * FROM clients";
 
     public JdbcClientsDao(Connection connection) {
@@ -42,15 +44,6 @@ public class JdbcClientsDao extends GenericDao<Clients> {
         return String.valueOf(allClients);
     }
 
-    @Override
-    public String filterByCountry(String country) {
-        return null;
-    }
-
-    @Override
-    public String filterByPrice(int min, int max) {
-        return null;
-    }
 
     @Override
     public Clients update(Clients toUpdate) {
@@ -62,11 +55,6 @@ public class JdbcClientsDao extends GenericDao<Clients> {
         try {
             PreparedStatement statement = this.connection.prepareStatement(INSERT);
 
-            if (CheckEmailInDB(toCreate.getEmail())) {
-                System.out.println("This email already exists.");
-                System.out.println("--------------------------");
-                MainMenu.menu();
-            } else {
                 statement.setString(1, toCreate.getFirstName());
                 statement.setString(2, toCreate.getLastName());
                 statement.setString(3, toCreate.getEmail());
@@ -75,8 +63,7 @@ public class JdbcClientsDao extends GenericDao<Clients> {
                 statement.close();
                 System.out.println("Your account has registered.");
                 System.out.println("----------------------------");
-                MainMenu.menu();
-            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -93,6 +80,21 @@ public class JdbcClientsDao extends GenericDao<Clients> {
         try {
             PreparedStatement statement = this.connection.prepareStatement(SELECT_BY_EMAIL);
             statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkPasswordInDB(String password) {
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(SELECT_BY_PASSWORD);
+            statement.setString(1, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return true;

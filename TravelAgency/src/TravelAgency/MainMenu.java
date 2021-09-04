@@ -12,11 +12,13 @@ import java.util.Scanner;
 public class MainMenu {
     static Scanner scanner = new Scanner(System.in);
     static Connection connection;
+    private static String email = null;
 
     public static void main(String[] args) {
         menu();
     }
-    static void optionMenu(){
+
+    static void optionMenu() {
         TourService tours = new TourService(new JdbcToursDao(DBConnection.getConnection()));
         System.out.println("Choose the option: ");
         System.out.println();
@@ -30,7 +32,7 @@ public class MainMenu {
 
         String answer = scanner.nextLine();
 
-        switch (answer){
+        switch (answer.toLowerCase()) {
             case "1":
                 System.out.println(tours.getAllTours());
                 optionMenu();
@@ -44,25 +46,25 @@ public class MainMenu {
                 optionMenu();
                 break;
             case "4":
-             //   printAllClients();
+                //   printAllClients();
                 break;
             case "5":
-             //   printAllTours();
+                //   printAllTours();
                 break;
             case "6":
-              //  printAllReservations();
+                //  printAllReservations();
                 break;
             case "quit":
-                break;
+                System.exit(0);
             default:
                 System.out.println("Enter number to choose the option!");
                 optionMenu();
                 break;
         }
     }
-    static void menu(){
+
+   public static void menu() {
         final ClientService clientService = new ClientService(new JdbcClientsDao(DBConnection.getConnection()));
-        JdbcClientsDao cl = new JdbcClientsDao(connection);
 
         System.out.println("************************************");
         System.out.println("      Welcome to Travel Agency      ");
@@ -70,24 +72,28 @@ public class MainMenu {
         System.out.println();
         System.out.println("Already have an account? Y/N \nEnter quit to exit");
         System.out.println();
+
         String answer = scanner.nextLine();
-        switch (answer){
-            case "Y":
+        switch (answer.toLowerCase()) {
+            case "y":
                 System.out.print("Enter your email: ");
-                String email = scanner.nextLine();
-                if (clientService.checkEmailInDB(email)){
+                email = scanner.nextLine();
+                System.out.print("Enter your password: ");
+                String password = scanner.nextLine();
+                if (clientService.checkEmailInDB(email)&&clientService.checkPassword(password)) {
                     optionMenu();
                     break;
-                }else{
-                    System.out.println("Email has not found.");
-                    System.out.println("--------------------");
+                } else {
+                    System.out.println("The email or password is incorrect.");
+                    System.out.println("-----------------------------------");
                     menu();
                     break;
                 }
-            case "N":
+            case "n":
                 clientService.addClient();
+                optionMenu();
             case "quit":
-                break;
+                System.exit(0);
             default:
                 System.out.println("Enter Y/N to enter the menu!");
                 System.out.println("----------------------------");
@@ -97,3 +103,4 @@ public class MainMenu {
 
     }
 }
+

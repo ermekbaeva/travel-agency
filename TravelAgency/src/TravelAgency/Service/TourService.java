@@ -1,6 +1,6 @@
 package TravelAgency.Service;
 
-import TravelAgency.Dao.GenericDao;
+import TravelAgency.Dao.TourDao;
 import TravelAgency.Entity.Tours;
 
 import java.sql.Connection;
@@ -9,9 +9,9 @@ import java.util.Scanner;
 public class TourService {
     static Connection connection;
 
-    private GenericDao<Tours> accessObject;
+    private TourDao<Tours> accessObject;
 
-    public TourService(GenericDao<Tours> accessObject){
+    public TourService(TourDao<Tours> accessObject){
         this.accessObject = accessObject;
     }
 
@@ -24,7 +24,7 @@ public class TourService {
         Scanner scanner = new Scanner(System.in);
         int min = scanner.nextInt();
 
-        System.out.print("Enter min price: ");
+        System.out.print("Enter max price: ");
         int max = scanner.nextInt();
 
         return accessObject.filterByPrice(min, max);
