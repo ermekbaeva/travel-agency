@@ -13,6 +13,7 @@ public class JdbcClientsDao extends ClientDao<Clients> {
     private static final String SELECT_BY_EMAIL = "SELECT * FROM clients WHERE email = ?";
     private static final String SELECT_BY_PASSWORD = "SELECT * FROM clients WHERE password = ?";
     private static final String SELECT_ALL = "SELECT * FROM clients";
+    private static final String DELETE_BY_EMAIL = "DELETE FROM clients WHERE email = ?";
 
     public JdbcClientsDao(Connection connection) {
         super(connection);
@@ -71,8 +72,19 @@ public class JdbcClientsDao extends ClientDao<Clients> {
 
 
     @Override
-    public void delete(long id) {
+    public void delete(String email) {
+        try {
+            PreparedStatement statement = this.connection.prepareStatement(DELETE_BY_EMAIL);
 
+            statement.setString(1, email);
+            statement.executeUpdate();
+            statement.close();
+            System.out.println("Account has deleted.");
+            System.out.println("--------------------");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public boolean CheckEmailInDB(String email) {

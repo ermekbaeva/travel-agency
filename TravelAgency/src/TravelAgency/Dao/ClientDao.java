@@ -21,5 +21,5 @@ public abstract class ClientDao<T extends DataTransferObject>{
 
     public abstract void create(T toCreate);
 
-    public abstract void delete(long id);
+    public abstract void delete(String email);
 }

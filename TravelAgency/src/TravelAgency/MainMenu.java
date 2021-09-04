@@ -90,8 +90,26 @@ public class MainMenu {
                     break;
                 }
             case "n":
-                clientService.addClient();
-                optionMenu();
+                System.out.print("Enter first name: ");
+                Scanner scanner = new Scanner(System.in);
+                String firstName = scanner.nextLine();
+
+                System.out.print("Enter last name: ");
+                String lastName = scanner.nextLine();
+
+                System.out.print("Enter email: ");
+                String email = scanner.nextLine();
+
+                System.out.print("Enter password: ");
+                password = scanner.nextLine();
+                if (clientService.checkEmailInDB(email)) {
+                    System.out.println("This email already exists.");
+                    System.out.println("--------------------------");
+                    MainMenu.menu();
+                } else {
+                    clientService.addClient(firstName, lastName, email, password);
+                    optionMenu();
+                }
             case "quit":
                 System.exit(0);
             default:

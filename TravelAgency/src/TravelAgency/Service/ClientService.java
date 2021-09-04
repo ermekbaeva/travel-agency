@@ -16,33 +16,16 @@ public class ClientService {
         this.accessObject = accessObject;
     }
 
-    public void addClient(){
-        System.out.print("Enter first name: ");
-        Scanner scanner = new Scanner(System.in);
-        String firstName = scanner.nextLine();
-
-        System.out.print("Enter last name: ");
-        String lastName = scanner.nextLine();
-
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-
+    public void addClient(String firstName, String lastName, String email, String password){
         Clients newClient = new Clients();
         newClient.setFirstName(firstName);
         newClient.setLastName(lastName);
         newClient.setEmail(email);
         newClient.setPassword(password);
 
-        if (checkEmailInDB(email)) {
-            System.out.println("This email already exists.");
-            System.out.println("--------------------------");
-            MainMenu.menu();
-        } else {
-            this.accessObject.create(newClient);
-        }
+
+        this.accessObject.create(newClient);
+
     }
     public boolean checkEmailInDB(String email){
         return this.accessObject.CheckEmailInDB(email);
@@ -50,6 +33,10 @@ public class ClientService {
 
     public boolean checkPassword(String password){
         return this.accessObject.checkPasswordInDB(password);
+    }
+
+    public void deleteClient(String email){
+        this.accessObject.delete(email);
     }
 
 }
